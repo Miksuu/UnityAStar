@@ -16,6 +16,7 @@ public class GridGenerator : MonoBehaviour
     private void Start()
     {
         GenerateGrid();
+        SpawnPlayer();
     }
 
     [SerializeField] private GameObject playerPrefab;
@@ -35,7 +36,6 @@ public class GridGenerator : MonoBehaviour
                 gridArray[x, y].Coordinates = new Vector2(x, y);
             }
         }
-        SpawnPlayer();
     }
 
     private void SpawnPlayer()
