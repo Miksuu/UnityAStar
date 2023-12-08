@@ -244,9 +244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a47ae1ec638c9384ab66868c8fa86e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 0
-  gridHeight: 0
-  obstaclePercentage: 0
+  gridWidth: 20
+  gridHeight: 20
+  obstaclePercentage: 10
+  gridPrefab: {fileID: 4507789656915275847, guid: 0ed5b9da0556e4c468f00c49a02e5825, type: 3}
+  obstaclePrefab: {fileID: 5624599397185965995, guid: 6d762529c3cab3f41a231a584c5b94ce, type: 3}
 --- !u!4 &2120242569
 Transform:
   m_ObjectHideFlags: 0
