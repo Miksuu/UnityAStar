@@ -343,6 +343,7 @@ MonoBehaviour:
   obstaclePercentage: 10
   gridPrefab: {fileID: 4507789656915275847, guid: 0ed5b9da0556e4c468f00c49a02e5825, type: 3}
   obstaclePrefab: {fileID: 4940058939730365086, guid: 6d762529c3cab3f41a231a584c5b94ce, type: 3}
+  playerPrefab: {fileID: 8006303336797364739, guid: d6e78851c574c2c48afbb6f7e268b207, type: 3}
 --- !u!4 &2120242569
 Transform:
   m_ObjectHideFlags: 0

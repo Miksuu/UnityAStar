@@ -18,6 +18,9 @@ public class GridGenerator : MonoBehaviour
         GenerateGrid();
     }
 
+    [SerializeField] private GameObject playerPrefab;
+    private Player player;
+
     private void GenerateGrid()
     {
         gridArray = new Grid[gridWidth, gridHeight];
@@ -32,5 +35,19 @@ public class GridGenerator : MonoBehaviour
                 gridArray[x, y].Coordinates = new Vector2(x, y);
             }
         }
+        SpawnPlayer();
+    }
+
+    private void SpawnPlayer()
+    {
+        int x = Random.Range(0, gridWidth);
+        int y = Random.Range(0, gridHeight);
+        while (gridArray[x, y].IsObstacle)
+        {
+            x = Random.Range(0, gridWidth);
+            y = Random.Range(0, gridHeight);
+        }
+        GameObject playerInstance = Instantiate(playerPrefab, new Vector3(x, y, -0.5f), Quaternion.identity);
+        player = playerInstance.GetComponent<Player>();
     }
 }
