@@ -15,6 +15,11 @@ public class GridGenerator : MonoBehaviour
 
     private void Start()
     {
+        GenerateGrid();
+    }
+
+    private void GenerateGrid()
+    {
         gridArray = new Grid[gridWidth, gridHeight];
         for (int x = 0; x < gridWidth; x++)
         {
