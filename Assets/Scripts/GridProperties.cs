@@ -23,8 +23,8 @@ public class GridProperties : MonoBehaviour
                 GameObject toInstantiate = Random.Range(0, 100) < obstaclePercentage ? obstaclePrefab : gridPrefab;
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity);
                 gridArray[x, y] = instance.GetComponent<Grid>();
-                //gridArray[x, y].IsObstacle = toInstantiate == obstaclePrefab;
-                //gridArray[x, y].Coordinates = new Vector2(x, y);
+                gridArray[x, y].IsObstacle = toInstantiate == obstaclePrefab;
+                gridArray[x, y].Coordinates = new Vector2(x, y);
             }
         }
     }
