@@ -29,9 +29,3 @@ public class GridProperties : MonoBehaviour
         }
     }
 }
-
-public class Grid : MonoBehaviour
-{
-    public bool IsObstacle { get; set; }
-    public Vector2 Coordinates { get; set; }
-}
