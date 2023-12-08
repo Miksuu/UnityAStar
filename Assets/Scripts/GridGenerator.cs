@@ -9,12 +9,13 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private int obstaclePercentage;
 
     [SerializeField] private GameObject gridPrefab;
-    [SerializeField] private GameObject obstaclePrefab;
-
     private Grid[,] gridArray;
+    private Material obstacleMaterial;
 
     private void Start()
     {
+        obstacleMaterial = Resources.Load<Material>("Materials/ObstacleMat");
+        Debug.Log("Obstacle material: " + obstacleMaterial);
         GenerateGrid();
         SpawnPlayer();
     }
@@ -29,10 +30,13 @@ public class GridGenerator : MonoBehaviour
         {
             for (int y = 0; y < gridHeight; y++)
             {
-                GameObject toInstantiate = Random.Range(0, 100) < obstaclePercentage ? obstaclePrefab : gridPrefab;
-                GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity);
+                GameObject instance = Instantiate(gridPrefab, new Vector3(x, y, 0f), Quaternion.identity);
                 gridArray[x, y] = instance.GetComponent<Grid>();
-                gridArray[x, y].IsObstacle = toInstantiate == obstaclePrefab;
+                if (Random.Range(0, 100) < obstaclePercentage)
+                {
+                    instance.GetComponent<MeshRenderer>().materials[0] = obstacleMaterial;
+                    gridArray[x, y].IsObstacle = true;
+                }
                 gridArray[x, y].Coordinates = new Vector2(x, y);
             }
         }
