@@ -36,7 +36,6 @@ public class GridGenerator : MonoBehaviour
                 {
                     var meshRenderer = instance.GetComponent<MeshRenderer>();
                     meshRenderer.material = obstacleMaterial;
-                    Debug.Log("After setting material: " + meshRenderer.materials[0].name);
                     gridArray[x, y].IsObstacle = true;
                 }
                 gridArray[x, y].Coordinates = new Vector2(x, y);
