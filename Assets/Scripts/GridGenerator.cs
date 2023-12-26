@@ -34,7 +34,9 @@ public class GridGenerator : MonoBehaviour
                 gridArray[x, y] = instance.GetComponent<Grid>();
                 if (Random.Range(0, 100) < obstaclePercentage)
                 {
-                    instance.GetComponent<MeshRenderer>().materials[0] = obstacleMaterial;
+                    var meshRenderer = instance.GetComponent<MeshRenderer>();
+                    meshRenderer.material = obstacleMaterial;
+                    Debug.Log("After setting material: " + meshRenderer.materials[0].name);
                     gridArray[x, y].IsObstacle = true;
                 }
                 gridArray[x, y].Coordinates = new Vector2(x, y);
