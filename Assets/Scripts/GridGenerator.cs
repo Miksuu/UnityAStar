@@ -21,7 +21,7 @@ public class GridGenerator : MonoBehaviour
     }
 
     [SerializeField] private GameObject playerPrefab;
-    private Player player;
+    private GameObject playerGameobject;
 
     private void GenerateGrid()
     {
@@ -52,8 +52,9 @@ public class GridGenerator : MonoBehaviour
             x = Random.Range(0, gridWidth);
             y = Random.Range(0, gridHeight);
         }
-        GameObject playerInstance = Instantiate(playerPrefab, new Vector3(x, y, -0.5f), Quaternion.identity);
-        player = playerInstance.GetComponent<Player>();
+        playerGameobject = Instantiate(playerPrefab, new Vector3(x, y, -0.5f), Quaternion.identity);
+        
+        Debug.Log("Player spawned at: " + x + ", " + y);
     }
 
     private void Update()
@@ -78,17 +79,19 @@ public class GridGenerator : MonoBehaviour
 
     private void MovePlayer(Vector2 direction)
     {
-        Debug.Log("Player: " + player);
-        Debug.Log("Player Transform: " + player.transform);
-        Debug.Log("Player Position: " + player.transform.position);
+        Debug.Log("Player: " + playerGameobject);
+        Debug.Log("Player Transform: " + playerGameobject.transform);
+        Debug.Log("Player Position: " + playerGameobject.transform.position);
         Debug.Log("Direction: " + direction);
-        Vector2 newCoordinates = player.transform.position + new Vector3(direction.x, direction.y, 0);
+
+        Vector2 newCoordinates = playerGameobject.transform.position + new Vector3(direction.x, direction.y, 0);
         Debug.Log("New Coordinates: " + newCoordinates);
+
         if (newCoordinates.x >= 0 && newCoordinates.x < gridWidth && newCoordinates.y >= 0 && newCoordinates.y < gridHeight)
         {
             if (!gridArray[(int)newCoordinates.x, (int)newCoordinates.y].IsObstacle)
             {
-                player.transform.position = new Vector3(newCoordinates.x, newCoordinates.y, -0.5f);
+                playerGameobject.transform.position = new Vector3(newCoordinates.x, newCoordinates.y, -0.5f);
             }
         }
     }
