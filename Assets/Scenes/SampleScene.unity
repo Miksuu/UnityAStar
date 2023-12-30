@@ -215,6 +215,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1469513923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1469513925}
+  - component: {fileID: 1469513924}
+  m_Layer: 0
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1469513924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469513923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2a42da674ed634dba4aea07be50196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1469513925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469513923}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.06989, y: -9.657002, z: 26.654766}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1861665541
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +386,6 @@ MonoBehaviour:
   gridHeight: 20
   obstaclePercentage: 10
   gridPrefab: {fileID: 4507789656915275847, guid: 0ed5b9da0556e4c468f00c49a02e5825, type: 3}
-  obstaclePrefab: {fileID: 4940058939730365086, guid: 6d762529c3cab3f41a231a584c5b94ce, type: 3}
   playerPrefab: {fileID: 8006303336797364739, guid: d6e78851c574c2c48afbb6f7e268b207, type: 3}
 --- !u!4 &2120242569
 Transform:
