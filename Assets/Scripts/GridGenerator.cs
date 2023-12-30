@@ -107,6 +107,10 @@ public class GridGenerator : MonoBehaviour
 
             foreach (Vector2 next in GetNeighbors(current))
             {
+                if (gridArray[(int)next.x, (int)next.y].IsObstacle)
+                {
+                    continue;
+                }
                 float newCost = costSoFar[current] + GetCost(current, next);
                 if (!costSoFar.ContainsKey(next) || newCost < costSoFar[next])
                 {
