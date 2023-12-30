@@ -189,7 +189,7 @@ public class GridGenerator : MonoBehaviour
         }
 
         isPlayerMoving = true;
-        Debug.Log("Moving player along path: " + _path[0].x + ", " + _path[0].y);
+        //Debug.Log("Moving player along path: " + _path[0].x + ", " + _path[0].y);
         foreach (Vector2 coordinates in _path)
         {
             Debug.Log("Moving player to " + coordinates);
