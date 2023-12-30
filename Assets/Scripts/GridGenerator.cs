@@ -78,7 +78,12 @@ public class GridGenerator : MonoBehaviour
 
     private void MovePlayer(Vector2 direction)
     {
+        Debug.Log("Player: " + player);
+        Debug.Log("Player Transform: " + player.transform);
+        Debug.Log("Player Position: " + player.transform.position);
+        Debug.Log("Direction: " + direction);
         Vector2 newCoordinates = player.transform.position + new Vector3(direction.x, direction.y, 0);
+        Debug.Log("New Coordinates: " + newCoordinates);
         if (newCoordinates.x >= 0 && newCoordinates.x < gridWidth && newCoordinates.y >= 0 && newCoordinates.y < gridHeight)
         {
             if (!gridArray[(int)newCoordinates.x, (int)newCoordinates.y].IsObstacle)
