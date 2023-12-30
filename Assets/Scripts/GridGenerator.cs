@@ -125,6 +125,11 @@ public class GridGenerator : MonoBehaviour
         }
 
         Vector2 temp = _target;
+        if (!cameFrom.ContainsKey(temp))
+        {
+            Debug.Log("No path found to target: " + _target);
+            return path;
+        }
         while (!temp.Equals(_start))
         {
             path.Add(temp);
