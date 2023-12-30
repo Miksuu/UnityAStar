@@ -15,8 +15,8 @@ public class GridGenerator : MonoBehaviour
 
     private bool isPlayerMoving = false;
 
-    [SerializeField] private GameObject playerPrefab;
-    public GameObject playerGameobject { get; private set; }
+    [SerializeField] public GameObject playerPrefab;
+    public GameObject playerGameobject { get; set; }
 
     private Vector2 targetCoordinates;
 
