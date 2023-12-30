@@ -59,26 +59,6 @@ public class GridGenerator : MonoBehaviour
         Debug.Log("Player spawned at: " + x + ", " + y);
     }
 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.W))
-    //     {
-    //         MovePlayer(Vector2.up);
-    //     }
-    //     else if (Input.GetKeyDown(KeyCode.S))
-    //     {
-    //         MovePlayer(Vector2.down);
-    //     }
-    //     else if (Input.GetKeyDown(KeyCode.A))
-    //     {
-    //         MovePlayer(Vector2.left);
-    //     }
-    //     else if (Input.GetKeyDown(KeyCode.D))
-    //     {
-    //         MovePlayer(Vector2.right);
-    //     }
-    // }
-
     public class PriorityQueue<T>
     {
         private List<KeyValuePair<int, T>> elements = new List<KeyValuePair<int, T>>();
