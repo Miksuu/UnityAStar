@@ -53,29 +53,29 @@ public class GridGenerator : MonoBehaviour
             y = Random.Range(0, gridHeight);
         }
         playerGameobject = Instantiate(playerPrefab, new Vector3(x, y, -0.5f), Quaternion.identity);
-        
+
         Debug.Log("Player spawned at: " + x + ", " + y);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            MovePlayer(Vector2.up);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            MovePlayer(Vector2.down);
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            MovePlayer(Vector2.left);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            MovePlayer(Vector2.right);
-        }
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.W))
+    //     {
+    //         MovePlayer(Vector2.up);
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.S))
+    //     {
+    //         MovePlayer(Vector2.down);
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.A))
+    //     {
+    //         MovePlayer(Vector2.left);
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.D))
+    //     {
+    //         MovePlayer(Vector2.right);
+    //     }
+    // }
 
     private void MovePlayer(Vector2 direction)
     {
