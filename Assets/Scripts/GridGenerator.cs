@@ -6,11 +6,10 @@ public class GridGenerator : MonoBehaviour
 {
     public static GridGenerator Instance { get; private set; }
 
-    [SerializeField] private int gridWidth;
-    [SerializeField] private int gridHeight;
-    [SerializeField] private int obstaclePercentage;
-
-    [SerializeField] private GameObject gridPrefab;
+    public int gridWidth;
+    public int gridHeight;
+    public int obstaclePercentage;
+    public GameObject gridPrefab;
     private Grid[,] gridArray;
     private Material obstacleMaterial;
 
