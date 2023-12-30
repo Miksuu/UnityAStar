@@ -10,5 +10,7 @@ public class Grid : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log("Grid at " + Coordinates + " clicked.");
+
+        FindObjectOfType<GridGenerator>().SetTargetCoordinates(Coordinates);
     }
 }
