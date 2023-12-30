@@ -176,7 +176,7 @@ public class GridGenerator : MonoBehaviour
         Debug.Log("Setting target coordinates to " + _coordinates);
         targetCoordinates = _coordinates;
         List<Vector2> path = FindPath((Vector2)playerGameobject.transform.position, targetCoordinates);
-        Debug.Log("Path from player to target: " + path[0].x + ", " + path[0].y);
+        //Debug.Log("Path from player to target: " + path[0].x + ", " + path[0].y);
         StartCoroutine(MovePlayerAlongPath(path));
     }
 
