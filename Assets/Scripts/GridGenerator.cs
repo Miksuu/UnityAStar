@@ -194,7 +194,7 @@ public class GridGenerator : MonoBehaviour
         {
             Debug.Log("Moving player to " + coordinates);
             playerGameobject.transform.position = new Vector3(coordinates.x, coordinates.y, -0.5f);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.1f);
         }
         Debug.Log("Player movement along path completed.");
         isPlayerMoving = false;
