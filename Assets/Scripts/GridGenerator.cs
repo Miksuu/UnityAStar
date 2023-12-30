@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
 {
+    public static GridGenerator Instance { get; private set; }
+
     [SerializeField] private int gridWidth;
     [SerializeField] private int gridHeight;
     [SerializeField] private int obstaclePercentage;
@@ -13,6 +15,18 @@ public class GridGenerator : MonoBehaviour
     private Material obstacleMaterial;
 
     private bool isPlayerMoving = false;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {
