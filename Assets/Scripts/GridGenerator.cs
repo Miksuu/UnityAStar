@@ -60,8 +60,6 @@ public class GridGenerator : MonoBehaviour
         }
     }
 
-
-
     private List<Vector2> FindPath(Vector2 _start, Vector2 _target)
     {
         Debug.Log("Finding path from " + _start + " to " + _target);
