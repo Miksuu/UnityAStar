@@ -150,24 +150,24 @@ public class GridGenerator : MonoBehaviour
         return path;
     }
 
-    private float GetCost(Vector2 from, Vector2 to)
+    private float GetCost(Vector2 _from, Vector2 _to)
     {
-        if (gridArray[(int)to.x, (int)to.y].IsObstacle)
+        if (gridArray[(int)_to.x, (int)_to.y].IsObstacle)
         {
             return Mathf.Infinity;
         }
         else
         {
-            return Vector2.Distance(from, to);
+            return Vector2.Distance(_from, _to);
         }
     }
 
-    private List<Vector2> GetNeighbors(Vector2 current)
+    private List<Vector2> GetNeighbors(Vector2 _current)
     {
         List<Vector2> neighbors = new List<Vector2>();
 
-        int x = (int)current.x;
-        int y = (int)current.y;
+        int x = (int)_current.x;
+        int y = (int)_current.y;
         if (x > 0) neighbors.Add(gridArray[x - 1, y].Coordinates);
         if (x < gridWidth - 1) neighbors.Add(gridArray[x + 1, y].Coordinates);
         if (y > 0) neighbors.Add(gridArray[x, y - 1].Coordinates);
@@ -175,9 +175,9 @@ public class GridGenerator : MonoBehaviour
         return neighbors;
     }
 
-    private float GetHeuristic(Vector2 next, Vector2 target)
+    private float GetHeuristic(Vector2 _next, Vector2 _target)
     {
-        return Mathf.Abs(next.x - target.x) + Mathf.Abs(next.y - target.y);
+        return Mathf.Abs(_next.x - _target.x) + Mathf.Abs(_next.y - _target.y);
     }
 
     public void SetTargetCoordinates(Vector2 _coordinates)
