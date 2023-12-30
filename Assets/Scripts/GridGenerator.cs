@@ -10,7 +10,7 @@ public class GridGenerator : MonoBehaviour
     public int gridHeight;
     public int obstaclePercentage;
     public GameObject gridPrefab;
-    private Grid[,] gridArray;
+    public Grid[,] gridArray;
     private Material obstacleMaterial;
 
     private bool isPlayerMoving = false;
