@@ -55,4 +55,36 @@ public class GridGenerator : MonoBehaviour
         GameObject playerInstance = Instantiate(playerPrefab, new Vector3(x, y, -0.5f), Quaternion.identity);
         player = playerInstance.GetComponent<Player>();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            MovePlayer(Vector2.up);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            MovePlayer(Vector2.down);
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            MovePlayer(Vector2.left);
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            MovePlayer(Vector2.right);
+        }
+    }
+
+    private void MovePlayer(Vector2 direction)
+    {
+        Vector2 newCoordinates = player.transform.position + new Vector3(direction.x, direction.y, 0);
+        if (newCoordinates.x >= 0 && newCoordinates.x < gridWidth && newCoordinates.y >= 0 && newCoordinates.y < gridHeight)
+        {
+            if (!gridArray[(int)newCoordinates.x, (int)newCoordinates.y].IsObstacle)
+            {
+                player.transform.position = new Vector3(newCoordinates.x, newCoordinates.y, -0.5f);
+            }
+        }
+    }
 }
