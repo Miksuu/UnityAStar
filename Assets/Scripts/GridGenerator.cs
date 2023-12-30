@@ -137,7 +137,7 @@ public class GridGenerator : MonoBehaviour
         }
         path.Reverse();
 
-        Debug.Log("Path found: " + path);
+        Debug.Log("Path found: " + path[0].x + ", " + path[0].y);
         return path;
     }
 
@@ -176,7 +176,7 @@ public class GridGenerator : MonoBehaviour
         Debug.Log("Setting target coordinates to " + _coordinates);
         targetCoordinates = _coordinates;
         List<Vector2> path = FindPath((Vector2)playerGameobject.transform.position, targetCoordinates);
-        Debug.Log("Path from player to target: " + path);
+        Debug.Log("Path from player to target: " + path[0].x + ", " + path[0].y);
         StartCoroutine(MovePlayerAlongPath(path));
     }
 
@@ -189,7 +189,7 @@ public class GridGenerator : MonoBehaviour
         }
 
         isPlayerMoving = true;
-        Debug.Log("Moving player along path: " + _path);
+        Debug.Log("Moving player along path: " + _path[0].x + ", " + _path[0].y);
         foreach (Vector2 coordinates in _path)
         {
             Debug.Log("Moving player to " + coordinates);
