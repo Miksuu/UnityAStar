@@ -12,6 +12,8 @@ public class GridGenerator : MonoBehaviour
     private Grid[,] gridArray;
     private Material obstacleMaterial;
 
+    private bool isPlayerMoving = false;
+
     private void Start()
     {
         obstacleMaterial = Resources.Load<Material>("Materials/ObstacleMat");
@@ -175,6 +177,13 @@ public class GridGenerator : MonoBehaviour
 
     private IEnumerator MovePlayerAlongPath(List<Vector2> _path)
     {
+        if (isPlayerMoving)
+        {
+            Debug.Log("Player is already moving. New movement command ignored.");
+            yield break;
+        }
+
+        isPlayerMoving = true;
         Debug.Log("Moving player along path: " + _path);
         foreach (Vector2 coordinates in _path)
         {
@@ -183,5 +192,6 @@ public class GridGenerator : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         Debug.Log("Player movement along path completed.");
+        isPlayerMoving = false;
     }
 }
