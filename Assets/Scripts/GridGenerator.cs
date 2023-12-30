@@ -13,12 +13,8 @@ public class GridGenerator : MonoBehaviour
     public Grid[,] gridArray;
     private Material obstacleMaterial;
 
-    private bool isPlayerMoving = false;
-
     [SerializeField] public GameObject playerPrefab;
     private GameObject playerGameobject { get; set; }
-
-    private Vector2 targetCoordinates;
 
     private void Awake()
     {
