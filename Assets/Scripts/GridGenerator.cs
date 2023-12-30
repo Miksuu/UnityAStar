@@ -16,7 +16,7 @@ public class GridGenerator : MonoBehaviour
     private bool isPlayerMoving = false;
 
     [SerializeField] public GameObject playerPrefab;
-    public GameObject playerGameobject { get; set; }
+    private GameObject playerGameobject { get; set; }
 
     private Vector2 targetCoordinates;
 
@@ -37,7 +37,7 @@ public class GridGenerator : MonoBehaviour
         obstacleMaterial = Resources.Load<Material>("Materials/ObstacleMat");
         Debug.Log("Obstacle material: " + obstacleMaterial);
         GenerateGrid();
-        SpawnPlayer();
+        playerGameobject = Spawner.Instance.SpawnPlayer();
     }
 
     private void GenerateGrid()
@@ -60,19 +60,7 @@ public class GridGenerator : MonoBehaviour
         }
     }
 
-    private void SpawnPlayer()
-    {
-        int x = Random.Range(0, gridWidth);
-        int y = Random.Range(0, gridHeight);
-        while (gridArray[x, y].IsObstacle)
-        {
-            x = Random.Range(0, gridWidth);
-            y = Random.Range(0, gridHeight);
-        }
-        playerGameobject = Instantiate(playerPrefab, new Vector3(x, y, -0.5f), Quaternion.identity);
 
-        Debug.Log("Player spawned at: " + x + ", " + y);
-    }
 
     private List<Vector2> FindPath(Vector2 _start, Vector2 _target)
     {
