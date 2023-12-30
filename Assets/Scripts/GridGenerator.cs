@@ -15,6 +15,11 @@ public class GridGenerator : MonoBehaviour
 
     private bool isPlayerMoving = false;
 
+    [SerializeField] private GameObject playerPrefab;
+    private GameObject playerGameobject;
+
+    private Vector2 targetCoordinates;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -34,11 +39,6 @@ public class GridGenerator : MonoBehaviour
         GenerateGrid();
         SpawnPlayer();
     }
-
-    [SerializeField] private GameObject playerPrefab;
-    private GameObject playerGameobject;
-
-    private Vector2 targetCoordinates;
 
     private void GenerateGrid()
     {
