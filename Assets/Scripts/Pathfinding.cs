@@ -8,7 +8,7 @@ public class Pathfinding : MonoBehaviour
     private GameObject gameObjectToControl;
     private bool isObjectMoving = false;
     private List<Grid> updatedGrids = new List<Grid>();
-    private float movementDelayBetweenGrids = 0.1f;
+    private float movementDelayBetweenGrids = 0.3f;
 
     // Awake is called when the script instance is being loaded.
     // It initializes the gameObjectToControl with the GameObject this script is attached to.
