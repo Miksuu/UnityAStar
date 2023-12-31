@@ -116,6 +116,12 @@ public class Pathfinding : MonoBehaviour
     {
         Debug.Log("Setting target coordinates to " + _grid.Coordinates);
 
+        if (_grid.IsObstacle)
+        {
+            Debug.Log("Obstacle found at " + _grid.Coordinates + ". Pathfinding aborted.");
+            return;
+        }
+
         targetGrid = _grid;
 
         List<Grid> path = FindPath(
