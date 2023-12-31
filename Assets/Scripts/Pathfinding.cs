@@ -9,6 +9,7 @@ public class Pathfinding : MonoBehaviour
     private GameObject gameObjectToControl;
 
     private bool isObjectMovie = false;
+    private List<Grid> updatedGrids = new List<Grid>();
 
     private void Awake()
     {
@@ -46,6 +47,8 @@ public class Pathfinding : MonoBehaviour
                 }
                 float newCost = costSoFar[current] + GetCost(current, next);
                 next.UpdateCostText((int)newCost);
+                updatedGrids.Add(next);
+                
                 if (!costSoFar.ContainsKey(next) || newCost < costSoFar[next])
                 {
                     costSoFar[next] = newCost;
@@ -139,7 +142,18 @@ public class Pathfinding : MonoBehaviour
         var meshRenderer = targetGrid.GetComponent<MeshRenderer>();
         meshRenderer.material = GridGenerator.Instance.defaultMaterial;
 
+        ResetGridsCost();
+
         Debug.Log("Player movement along path completed.");
         isObjectMovie = false;
+    }
+
+    private void ResetGridsCost()
+    {
+        foreach (Grid grid in updatedGrids)
+        {
+            grid.UpdateCostText(0);
+        }
+        updatedGrids.Clear();
     }
 }
