@@ -5,12 +5,9 @@ using UnityEngine;
 public class Pathfinding : MonoBehaviour
 {
     private Grid targetGrid;
-
     private GameObject gameObjectToControl;
-
     private bool isObjectMoving = false;
     private List<Grid> updatedGrids = new List<Grid>();
-
     private float movementDelayBetweenGrids = 0.1f;
 
     private void Awake()
@@ -18,25 +15,21 @@ public class Pathfinding : MonoBehaviour
         gameObjectToControl = this.gameObject;
     }
 
-    private List<Grid> FindPath(Grid _start, Grid _target)
+    private List<Grid> FindPath(Grid _startGrid, Grid _targetGrid)
     {
-        Debug.Log("Finding path from " + _start.Coordinates + " to " + _target.Coordinates);
+        Debug.Log($"Finding path from {_startGrid.Coordinates} to {_targetGrid.Coordinates}");
         List<Grid> path = new List<Grid>();
-
         PriorityQueue<Grid> frontier = new PriorityQueue<Grid>();
-        frontier.Enqueue(_start, 0);
+        frontier.Enqueue(_startGrid, 0);
 
-        Dictionary<Grid, Grid> cameFrom = new Dictionary<Grid, Grid>();
-        cameFrom[_start] = _start;
-
-        Dictionary<Grid, float> costSoFar = new Dictionary<Grid, float>();
-        costSoFar[_start] = 0;
+        Dictionary<Grid, Grid> cameFrom = new Dictionary<Grid, Grid> { { _startGrid, _startGrid } };
+        Dictionary<Grid, float> costSoFar = new Dictionary<Grid, float> { { _startGrid, 0 } };
 
         while (frontier.Count > 0)
         {
             Grid current = frontier.Dequeue();
 
-            if (current.Equals(_target))
+            if (current.Equals(_targetGrid))
             {
                 break;
             }
@@ -58,69 +51,60 @@ public class Pathfinding : MonoBehaviour
                 if (!costSoFar.ContainsKey(next) || newCost < costSoFar[next])
                 {
                     costSoFar[next] = newCost;
-                    float priority = newCost + GetHeuristic(next, _target);
+                    float priority = newCost + GetHeuristic(next, _targetGrid);
                     frontier.Enqueue(next, (int)priority);
                     cameFrom[next] = current;
                 }
             }
         }
 
-        Grid temp = _target;
+        Grid temp = _targetGrid;
         if (!cameFrom.ContainsKey(temp))
         {
-            Debug.Log("No path found to target: " + _target.Coordinates);
+            Debug.Log($"No path found to target: {_targetGrid.Coordinates}");
             return path;
         }
-        while (!temp.Equals(_start))
+        while (!temp.Equals(_startGrid))
         {
             path.Add(temp);
             temp = cameFrom[temp];
         }
         path.Reverse();
 
-        //Debug.Log("Path found: " + path[0].Coordinates.x + ", " + path[0].Coordinates.y);
         return path;
     }
 
-    private float GetCost(Grid _from, Grid _to)
+    private float GetCost(Grid _fromGrid, Grid _toGrid)
     {
-        //Debug.Log("_from: " + _from.Coordinates.x + ", " + _from.Coordinates.y + " _to: " + _to.Coordinates.x + ", " + _to.Coordinates.y);
-
-        if (_to.IsObstacle)
-        {
-            return Mathf.Infinity;
-        }
-        else
-        {
-            return Vector2.Distance(_from.Coordinates, _to.Coordinates);
-        }
+        return _toGrid.IsObstacle ? Mathf.Infinity : Vector2.Distance(_fromGrid.Coordinates, _toGrid.Coordinates);
     }
 
-    private List<Grid> GetNeighbors(Grid _current)
+    private List<Grid> GetNeighbors(Grid _currentGrid)
     {
         List<Grid> neighbors = new List<Grid>();
+        int x = (int)_currentGrid.Coordinates.x;
+        int y = (int)_currentGrid.Coordinates.y;
+        GridGenerator gridGenerator = GridGenerator.Instance;
 
-        int x = (int)_current.Coordinates.x;
-        int y = (int)_current.Coordinates.y;
-        if (x > 0) neighbors.Add(GridGenerator.Instance.gridArray[x - 1, y]);
-        if (x < GridGenerator.Instance.gridWidth - 1) neighbors.Add(GridGenerator.Instance.gridArray[x + 1, y]);
-        if (y > 0) neighbors.Add(GridGenerator.Instance.gridArray[x, y - 1]);
-        if (y < GridGenerator.Instance.gridHeight - 1) neighbors.Add(GridGenerator.Instance.gridArray[x, y + 1]);
-        if (x > 0 && y > 0) neighbors.Add(GridGenerator.Instance.gridArray[x - 1, y - 1]);
-        if (x < GridGenerator.Instance.gridWidth - 1 && y < GridGenerator.Instance.gridHeight - 1) neighbors.Add(GridGenerator.Instance.gridArray[x + 1, y + 1]);
-        if (x > 0 && y < GridGenerator.Instance.gridHeight - 1) neighbors.Add(GridGenerator.Instance.gridArray[x - 1, y + 1]);
-        if (x < GridGenerator.Instance.gridWidth - 1 && y > 0) neighbors.Add(GridGenerator.Instance.gridArray[x + 1, y - 1]);
+        if (x > 0) neighbors.Add(gridGenerator.gridArray[x - 1, y]);
+        if (x < gridGenerator.gridWidth - 1) neighbors.Add(gridGenerator.gridArray[x + 1, y]);
+        if (y > 0) neighbors.Add(gridGenerator.gridArray[x, y - 1]);
+        if (y < gridGenerator.gridHeight - 1) neighbors.Add(gridGenerator.gridArray[x, y + 1]);
+        if (x > 0 && y > 0) neighbors.Add(gridGenerator.gridArray[x - 1, y - 1]);
+        if (x < gridGenerator.gridWidth - 1 && y < gridGenerator.gridHeight - 1) neighbors.Add(gridGenerator.gridArray[x + 1, y + 1]);
+        if (x > 0 && y < gridGenerator.gridHeight - 1) neighbors.Add(gridGenerator.gridArray[x - 1, y + 1]);
+        if (x < gridGenerator.gridWidth - 1 && y > 0) neighbors.Add(gridGenerator.gridArray[x + 1, y - 1]);
         return neighbors;
     }
 
-    private float GetHeuristic(Grid _next, Grid _target)
+    private float GetHeuristic(Grid _nextGrid, Grid _targetGrid)
     {
-        return Mathf.Abs(_next.Coordinates.x - _target.Coordinates.x) + Mathf.Abs(_next.Coordinates.y - _target.Coordinates.y);
+        return Mathf.Abs(_nextGrid.Coordinates.x - _targetGrid.Coordinates.x) + Mathf.Abs(_nextGrid.Coordinates.y - _targetGrid.Coordinates.y);
     }
 
     public void SetTargetCoordinates(Grid _grid)
     {
-        Debug.Log("Setting target coordinates to " + _grid.Coordinates);
+        Debug.Log($"Setting target coordinates to {_grid.Coordinates}");
 
         if (isObjectMoving)
         {
@@ -130,22 +114,20 @@ public class Pathfinding : MonoBehaviour
 
         if (_grid.IsObstacle)
         {
-            Debug.Log("Obstacle found at " + _grid.Coordinates + ". Pathfinding aborted.");
+            Debug.Log($"Obstacle found at {_grid.Coordinates}. Pathfinding aborted.");
             return;
         }
 
         targetGrid = _grid;
-
-        List<Grid> path = FindPath(
-            GridGenerator.Instance.gridArray[
-                (int)gameObjectToControl.transform.position.x, (int)gameObjectToControl.transform.position.y], targetGrid);
+        GridGenerator gridGenerator = GridGenerator.Instance;
+        List<Grid> path = FindPath(gridGenerator.gridArray[(int)gameObjectToControl.transform.position.x, (int)gameObjectToControl.transform.position.y], targetGrid);
         
         SetPathMaterial(path);
 
         var meshRenderer = _grid.GetComponent<MeshRenderer>();
-        meshRenderer.material = GridGenerator.Instance.targetMaterial;
+        meshRenderer.material = gridGenerator.targetMaterial;
 
-        StartCoroutine(MovePlayerAlongPath(path));
+        StartCoroutine(MoveObjectAlongPath(path));
     }
 
     private void SetPathMaterial(List<Grid> _path)
@@ -157,13 +139,12 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
-    private IEnumerator MovePlayerAlongPath(List<Grid> _path)
+    private IEnumerator MoveObjectAlongPath(List<Grid> _path)
     {
         isObjectMoving = true;
-        //Debug.Log("Moving player along path: " + _path[0].Coordinates.x + ", " + _path[0].Coordinates.y);
         foreach (Grid grid in _path)
         {
-            Debug.Log("Moving player to " + grid.Coordinates);
+            Debug.Log($"Moving player to {grid.Coordinates}");
             gameObjectToControl.transform.position = new Vector3(grid.Coordinates.x, grid.Coordinates.y, -0.5f);
             yield return new WaitForSeconds(movementDelayBetweenGrids);
         }
@@ -189,3 +170,4 @@ public class Pathfinding : MonoBehaviour
         updatedGrids.Clear();
     }
 }
+
