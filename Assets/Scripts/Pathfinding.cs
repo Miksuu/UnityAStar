@@ -106,6 +106,10 @@ public class Pathfinding : MonoBehaviour
         if (x < GridGenerator.Instance.gridWidth - 1) neighbors.Add(GridGenerator.Instance.gridArray[x + 1, y]);
         if (y > 0) neighbors.Add(GridGenerator.Instance.gridArray[x, y - 1]);
         if (y < GridGenerator.Instance.gridHeight - 1) neighbors.Add(GridGenerator.Instance.gridArray[x, y + 1]);
+        if (x > 0 && y > 0) neighbors.Add(GridGenerator.Instance.gridArray[x - 1, y - 1]);
+        if (x < GridGenerator.Instance.gridWidth - 1 && y < GridGenerator.Instance.gridHeight - 1) neighbors.Add(GridGenerator.Instance.gridArray[x + 1, y + 1]);
+        if (x > 0 && y < GridGenerator.Instance.gridHeight - 1) neighbors.Add(GridGenerator.Instance.gridArray[x - 1, y + 1]);
+        if (x < GridGenerator.Instance.gridWidth - 1 && y > 0) neighbors.Add(GridGenerator.Instance.gridArray[x + 1, y - 1]);
         return neighbors;
     }
 
