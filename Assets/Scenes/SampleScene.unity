@@ -384,8 +384,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridWidth: 20
   gridHeight: 20
-  obstaclePercentage: 10
+  obstaclePercentage: 30
   gridPrefab: {fileID: 4507789656915275847, guid: 0ed5b9da0556e4c468f00c49a02e5825, type: 3}
+  targetMaterial: {fileID: 0}
+  defaultMaterial: {fileID: 0}
+  calculatedMaterial: {fileID: 0}
+  pathMaterial: {fileID: 0}
   playerPrefab: {fileID: 8006303336797364739, guid: d6e78851c574c2c48afbb6f7e268b207, type: 3}
 --- !u!4 &2120242569
 Transform:
