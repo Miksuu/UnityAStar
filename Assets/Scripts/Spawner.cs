@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    // Singleton instance of the Spawner class
     public static Spawner Instance { get; private set; }
 
+    // Awake is called when the script instance is being loaded
+    // Used here to implement the Singleton pattern
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -18,6 +21,8 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    // Method to spawn a player at a random non-obstacle grid position
+    // Returns the spawned GameObject
     public GameObject SpawnPlayer()
     {
         int x = Random.Range(0, GridGenerator.Instance.gridWidth);

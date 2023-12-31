@@ -4,22 +4,39 @@ using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
 {
+    // Singleton instance of the GridGenerator class
     public static GridGenerator Instance { get; private set; }
 
+    // Grid dimensions
     public int gridWidth;
     public int gridHeight;
+
+    // Percentage of grid cells that will be obstacles
     public int obstaclePercentage;
+
+    // Prefab for grid cells
     public GameObject gridPrefab;
+
+    // 2D array representing the grid
     public Grid[,] gridArray;
+
+    // Material for obstacle cells
     private Material obstacleMaterial;
+
+    // Materials for different types of cells
     public Material targetMaterial;
     public Material defaultMaterial;
     public Material calculatedMaterial;
     public Material pathMaterial;
 
+    // Prefab for the player
     [SerializeField] public GameObject playerPrefab;
+
+    // Reference to the player game object
     private GameObject playerGameobject { get; set; }
 
+    // Awake is called when the script instance is being loaded
+    // Ensures that only one instance of GridGenerator exists
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -32,6 +49,8 @@ public class GridGenerator : MonoBehaviour
         }
     }
 
+    // Start is called before the first frame update
+    // Initializes materials and generates the grid
     private void Start()
     {
         obstacleMaterial = Resources.Load<Material>("Materials/ObstacleMat");
@@ -45,6 +64,7 @@ public class GridGenerator : MonoBehaviour
         playerGameobject = Spawner.Instance.SpawnPlayer();
     }
 
+    // Generates the grid by instantiating grid cells and setting their properties
     private void GenerateGrid()
     {
         gridArray = new Grid[gridWidth, gridHeight];

@@ -10,11 +10,15 @@ public class Pathfinding : MonoBehaviour
     private List<Grid> updatedGrids = new List<Grid>();
     private float movementDelayBetweenGrids = 0.1f;
 
+    // Awake is called when the script instance is being loaded.
+    // It initializes the gameObjectToControl with the GameObject this script is attached to.
     private void Awake()
     {
         gameObjectToControl = this.gameObject;
     }
 
+    // FindPath method is used to find the shortest path from the start grid to the target grid.
+    // It uses the A* algorithm for pathfinding.
     private List<Grid> FindPath(Grid _startGrid, Grid _targetGrid)
     {
         Debug.Log($"Finding path from {_startGrid.Coordinates} to {_targetGrid.Coordinates}");
@@ -74,11 +78,17 @@ public class Pathfinding : MonoBehaviour
         return path;
     }
 
+    // GetCost method is used to calculate the cost of moving from one grid to another.
+    // If the destination grid is an obstacle, the cost is infinity.
+    // Otherwise, the cost is the distance between the two grids.
     private float GetCost(Grid _fromGrid, Grid _toGrid)
     {
         return _toGrid.IsObstacle ? Mathf.Infinity : Vector2.Distance(_fromGrid.Coordinates, _toGrid.Coordinates);
     }
 
+    // This method is used to get all the neighboring grids of the current grid.
+    // It checks the boundaries of the grid to avoid out of range errors.
+    // It returns a list of all the neighboring grids including diagonals.
     private List<Grid> GetNeighbors(Grid _currentGrid)
     {
         List<Grid> neighbors = new List<Grid>();
@@ -97,11 +107,15 @@ public class Pathfinding : MonoBehaviour
         return neighbors;
     }
 
+    // This method calculates the heuristic cost for a grid node in the pathfinding algorithm.
+    // It uses the Manhattan distance (sum of absolute differences in x and y coordinates) as the heuristic.
     private float GetHeuristic(Grid _nextGrid, Grid _targetGrid)
     {
         return Mathf.Abs(_nextGrid.Coordinates.x - _targetGrid.Coordinates.x) + Mathf.Abs(_nextGrid.Coordinates.y - _targetGrid.Coordinates.y);
     }
 
+    // This method sets the target coordinates for the pathfinding algorithm.
+    // It checks if the object is already moving or if the target grid is an obstacle before setting the target coordinates.
     public void SetTargetCoordinates(Grid _grid)
     {
         Debug.Log($"Setting target coordinates to {_grid.Coordinates}");
@@ -130,6 +144,7 @@ public class Pathfinding : MonoBehaviour
         StartCoroutine(MoveObjectAlongPath(path));
     }
 
+    // This method sets the material of the path grids to the path material.
     private void SetPathMaterial(List<Grid> _path)
     {
         foreach (Grid grid in _path)
@@ -139,6 +154,8 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    // This method moves the object along the path.
+    // It changes the object's position to each grid in the path with a delay between each movement.
     private IEnumerator MoveObjectAlongPath(List<Grid> _path)
     {
         isObjectMoving = true;
@@ -158,6 +175,7 @@ public class Pathfinding : MonoBehaviour
         isObjectMoving = false;
     }
 
+    // This method resets the cost of all updated grids to 0 and clears the list of updated grids.
     private void ResetGridsCost()
     {
         foreach (Grid grid in updatedGrids)
