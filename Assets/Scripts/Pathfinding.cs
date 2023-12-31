@@ -8,7 +8,7 @@ public class Pathfinding : MonoBehaviour
 
     private GameObject gameObjectToControl;
 
-    private bool isObjectMovie = false;
+    private bool isObjectMoving = false;
     private List<Grid> updatedGrids = new List<Grid>();
 
     private void Awake()
@@ -116,6 +116,12 @@ public class Pathfinding : MonoBehaviour
     {
         Debug.Log("Setting target coordinates to " + _grid.Coordinates);
 
+        if (isObjectMoving)
+        {
+            Debug.Log("Player is already moving. New movement command ignored.");
+            return;
+        }
+
         if (_grid.IsObstacle)
         {
             Debug.Log("Obstacle found at " + _grid.Coordinates + ". Pathfinding aborted.");
@@ -147,13 +153,7 @@ public class Pathfinding : MonoBehaviour
 
     private IEnumerator MovePlayerAlongPath(List<Grid> _path)
     {
-        if (isObjectMovie)
-        {
-            Debug.Log("Player is already moving. New movement command ignored.");
-            yield break;
-        }
-
-        isObjectMovie = true;
+        isObjectMoving = true;
         //Debug.Log("Moving player along path: " + _path[0].Coordinates.x + ", " + _path[0].Coordinates.y);
         foreach (Grid grid in _path)
         {
@@ -168,7 +168,7 @@ public class Pathfinding : MonoBehaviour
         ResetGridsCost();
 
         Debug.Log("Player movement along path completed.");
-        isObjectMovie = false;
+        isObjectMoving = false;
     }
 
     private void ResetGridsCost()
