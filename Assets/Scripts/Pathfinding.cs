@@ -46,6 +46,10 @@ public class Pathfinding : MonoBehaviour
                     continue;
                 }
                 float newCost = costSoFar[current] + GetCost(current, next);
+
+                var meshRenderer = next.GetComponent<MeshRenderer>();
+                meshRenderer.material = GridGenerator.Instance.calculatedMaterial;
+
                 next.UpdateCostText((int)newCost);
                 updatedGrids.Add(next);
                 
@@ -152,6 +156,9 @@ public class Pathfinding : MonoBehaviour
     {
         foreach (Grid grid in updatedGrids)
         {
+            var meshRenderer = grid.GetComponent<MeshRenderer>();
+            meshRenderer.material = GridGenerator.Instance.defaultMaterial;
+
             grid.UpdateCostText(0);
         }
         updatedGrids.Clear();
