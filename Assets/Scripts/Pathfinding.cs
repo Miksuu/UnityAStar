@@ -116,13 +116,14 @@ public class Pathfinding : MonoBehaviour
     {
         Debug.Log("Setting target coordinates to " + _grid.Coordinates);
 
-        var meshRenderer = _grid.GetComponent<MeshRenderer>();
-        meshRenderer.material = GridGenerator.Instance.targetMaterial;
-
         targetGrid = _grid;
 
         List<Grid> path = FindPath(GridGenerator.Instance.gridArray[(int)gameObjectToControl.transform.position.x, (int)gameObjectToControl.transform.position.y], targetGrid);
         //Debug.Log("Path from player to target: " + path[0].Coordinates.x + ", " + path[0].Coordinates.y);
+
+        var meshRenderer = _grid.GetComponent<MeshRenderer>();
+        meshRenderer.material = GridGenerator.Instance.targetMaterial;
+
         StartCoroutine(MovePlayerAlongPath(path));
     }
 
