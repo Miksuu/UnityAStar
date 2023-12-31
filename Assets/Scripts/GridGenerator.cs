@@ -15,6 +15,7 @@ public class GridGenerator : MonoBehaviour
     public Material targetMaterial;
     public Material defaultMaterial;
     public Material calculatedMaterial;
+    public Material pathMaterial;
 
     [SerializeField] public GameObject playerPrefab;
     private GameObject playerGameobject { get; set; }
@@ -37,6 +38,7 @@ public class GridGenerator : MonoBehaviour
         targetMaterial = Resources.Load<Material>("Materials/TargetMat");
         defaultMaterial = Resources.Load<Material>("Materials/DefaultMat");
         calculatedMaterial = Resources.Load<Material>("Materials/CalculatedMat");
+        pathMaterial = Resources.Load<Material>("Materials/PathMat");
 
         Debug.Log("Obstacle material: " + obstacleMaterial);
         GenerateGrid();

@@ -118,13 +118,25 @@ public class Pathfinding : MonoBehaviour
 
         targetGrid = _grid;
 
-        List<Grid> path = FindPath(GridGenerator.Instance.gridArray[(int)gameObjectToControl.transform.position.x, (int)gameObjectToControl.transform.position.y], targetGrid);
-        //Debug.Log("Path from player to target: " + path[0].Coordinates.x + ", " + path[0].Coordinates.y);
+        List<Grid> path = FindPath(
+            GridGenerator.Instance.gridArray[
+                (int)gameObjectToControl.transform.position.x, (int)gameObjectToControl.transform.position.y], targetGrid);
+        
+        SetPathMaterial(path);
 
         var meshRenderer = _grid.GetComponent<MeshRenderer>();
         meshRenderer.material = GridGenerator.Instance.targetMaterial;
 
         StartCoroutine(MovePlayerAlongPath(path));
+    }
+
+    private void SetPathMaterial(List<Grid> _path)
+    {
+        foreach (Grid grid in _path)
+        {
+            var meshRenderer = grid.GetComponent<MeshRenderer>();
+            meshRenderer.material = GridGenerator.Instance.pathMaterial;
+        }
     }
 
     private IEnumerator MovePlayerAlongPath(List<Grid> _path)
