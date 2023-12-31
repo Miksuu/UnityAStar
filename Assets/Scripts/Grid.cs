@@ -12,6 +12,6 @@ public class Grid : MonoBehaviour
         Debug.Log("Grid at " + Coordinates + " clicked.");
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        playerObject.GetComponent<Pathfinding>().SetTargetCoordinates(Coordinates);
+        playerObject.GetComponent<Pathfinding>().SetTargetCoordinates(this);
     }
 }

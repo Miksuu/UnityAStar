@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
-    private Vector2 targetCoordinates;
+    private Grid targetGrid;
 
     private GameObject gameObjectToControl;
 
@@ -15,32 +15,32 @@ public class Pathfinding : MonoBehaviour
         gameObjectToControl = this.gameObject;
     }
 
-    private List<Vector2> FindPath(Vector2 _start, Vector2 _target)
+    private List<Grid> FindPath(Grid _start, Grid _target)
     {
-        Debug.Log("Finding path from " + _start + " to " + _target);
-        List<Vector2> path = new List<Vector2>();
+        Debug.Log("Finding path from " + _start.Coordinates + " to " + _target.Coordinates);
+        List<Grid> path = new List<Grid>();
 
-        PriorityQueue<Vector2> frontier = new PriorityQueue<Vector2>();
+        PriorityQueue<Grid> frontier = new PriorityQueue<Grid>();
         frontier.Enqueue(_start, 0);
 
-        Dictionary<Vector2, Vector2> cameFrom = new Dictionary<Vector2, Vector2>();
+        Dictionary<Grid, Grid> cameFrom = new Dictionary<Grid, Grid>();
         cameFrom[_start] = _start;
 
-        Dictionary<Vector2, float> costSoFar = new Dictionary<Vector2, float>();
+        Dictionary<Grid, float> costSoFar = new Dictionary<Grid, float>();
         costSoFar[_start] = 0;
 
         while (frontier.Count > 0)
         {
-            Vector2 current = frontier.Dequeue();
+            Grid current = frontier.Dequeue();
 
             if (current.Equals(_target))
             {
                 break;
             }
 
-            foreach (Vector2 next in GetNeighbors(current))
+            foreach (Grid next in GetNeighbors(current))
             {
-                if (GridGenerator.Instance.gridArray[(int)next.x, (int)next.y].IsObstacle)
+                if (next.IsObstacle)
                 {
                     continue;
                 }
@@ -55,10 +55,10 @@ public class Pathfinding : MonoBehaviour
             }
         }
 
-        Vector2 temp = _target;
+        Grid temp = _target;
         if (!cameFrom.ContainsKey(temp))
         {
-            Debug.Log("No path found to target: " + _target);
+            Debug.Log("No path found to target: " + _target.Coordinates);
             return path;
         }
         while (!temp.Equals(_start))
@@ -68,50 +68,53 @@ public class Pathfinding : MonoBehaviour
         }
         path.Reverse();
 
-        Debug.Log("Path found: " + path[0].x + ", " + path[0].y);
+        //Debug.Log("Path found: " + path[0].Coordinates.x + ", " + path[0].Coordinates.y);
         return path;
     }
 
-    private float GetCost(Vector2 _from, Vector2 _to)
+    private float GetCost(Grid _from, Grid _to)
     {
-        if (GridGenerator.Instance.gridArray[(int)_to.x, (int)_to.y].IsObstacle)
+        //Debug.Log("_from: " + _from.Coordinates.x + ", " + _from.Coordinates.y + " _to: " + _to.Coordinates.x + ", " + _to.Coordinates.y);
+
+        if (_to.IsObstacle)
         {
             return Mathf.Infinity;
         }
         else
         {
-            return Vector2.Distance(_from, _to);
+            return Vector2.Distance(_from.Coordinates, _to.Coordinates);
         }
     }
 
-    private List<Vector2> GetNeighbors(Vector2 _current)
+    private List<Grid> GetNeighbors(Grid _current)
     {
-        List<Vector2> neighbors = new List<Vector2>();
+        List<Grid> neighbors = new List<Grid>();
 
-        int x = (int)_current.x;
-        int y = (int)_current.y;
-        if (x > 0) neighbors.Add(GridGenerator.Instance.gridArray[x - 1, y].Coordinates);
-        if (x < GridGenerator.Instance.gridWidth - 1) neighbors.Add(GridGenerator.Instance.gridArray[x + 1, y].Coordinates);
-        if (y > 0) neighbors.Add(GridGenerator.Instance.gridArray[x, y - 1].Coordinates);
-        if (y < GridGenerator.Instance.gridHeight - 1) neighbors.Add(GridGenerator.Instance.gridArray[x, y + 1].Coordinates);
+        int x = (int)_current.Coordinates.x;
+        int y = (int)_current.Coordinates.y;
+        if (x > 0) neighbors.Add(GridGenerator.Instance.gridArray[x - 1, y]);
+        if (x < GridGenerator.Instance.gridWidth - 1) neighbors.Add(GridGenerator.Instance.gridArray[x + 1, y]);
+        if (y > 0) neighbors.Add(GridGenerator.Instance.gridArray[x, y - 1]);
+        if (y < GridGenerator.Instance.gridHeight - 1) neighbors.Add(GridGenerator.Instance.gridArray[x, y + 1]);
         return neighbors;
     }
 
-    private float GetHeuristic(Vector2 _next, Vector2 _target)
+    private float GetHeuristic(Grid _next, Grid _target)
     {
-        return Mathf.Abs(_next.x - _target.x) + Mathf.Abs(_next.y - _target.y);
+        return Mathf.Abs(_next.Coordinates.x - _target.Coordinates.x) + Mathf.Abs(_next.Coordinates.y - _target.Coordinates.y);
     }
 
-    public void SetTargetCoordinates(Vector2 _coordinates)
+    public void SetTargetCoordinates(Grid _grid)
     {
-        Debug.Log("Setting target coordinates to " + _coordinates);
-        targetCoordinates = _coordinates;
-        List<Vector2> path = FindPath((Vector2)gameObjectToControl.transform.position, targetCoordinates);
-        //Debug.Log("Path from player to target: " + path[0].x + ", " + path[0].y);
+        Debug.Log("Setting target coordinates to " + _grid.Coordinates);
+        targetGrid = _grid;
+
+        List<Grid> path = FindPath(GridGenerator.Instance.gridArray[(int)gameObjectToControl.transform.position.x, (int)gameObjectToControl.transform.position.y], targetGrid);
+        //Debug.Log("Path from player to target: " + path[0].Coordinates.x + ", " + path[0].Coordinates.y);
         StartCoroutine(MovePlayerAlongPath(path));
     }
 
-    private IEnumerator MovePlayerAlongPath(List<Vector2> _path)
+    private IEnumerator MovePlayerAlongPath(List<Grid> _path)
     {
         if (isObjectMovie)
         {
@@ -120,11 +123,11 @@ public class Pathfinding : MonoBehaviour
         }
 
         isObjectMovie = true;
-        //Debug.Log("Moving player along path: " + _path[0].x + ", " + _path[0].y);
-        foreach (Vector2 coordinates in _path)
+        //Debug.Log("Moving player along path: " + _path[0].Coordinates.x + ", " + _path[0].Coordinates.y);
+        foreach (Grid grid in _path)
         {
-            Debug.Log("Moving player to " + coordinates);
-            gameObjectToControl.transform.position = new Vector3(coordinates.x, coordinates.y, -0.5f);
+            Debug.Log("Moving player to " + grid.Coordinates);
+            gameObjectToControl.transform.position = new Vector3(grid.Coordinates.x, grid.Coordinates.y, -0.5f);
             yield return new WaitForSeconds(0.1f);
         }
         Debug.Log("Player movement along path completed.");
