@@ -107,6 +107,10 @@ public class Pathfinding : MonoBehaviour
     public void SetTargetCoordinates(Grid _grid)
     {
         Debug.Log("Setting target coordinates to " + _grid.Coordinates);
+
+        var meshRenderer = _grid.GetComponent<MeshRenderer>();
+        meshRenderer.material = GridGenerator.Instance.targetMaterial;
+
         targetGrid = _grid;
 
         List<Grid> path = FindPath(GridGenerator.Instance.gridArray[(int)gameObjectToControl.transform.position.x, (int)gameObjectToControl.transform.position.y], targetGrid);
