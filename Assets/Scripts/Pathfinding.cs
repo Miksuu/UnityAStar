@@ -45,6 +45,7 @@ public class Pathfinding : MonoBehaviour
                     continue;
                 }
                 float newCost = costSoFar[current] + GetCost(current, next);
+                next.UpdateCostText((int)newCost);
                 if (!costSoFar.ContainsKey(next) || newCost < costSoFar[next])
                 {
                     costSoFar[next] = newCost;
