@@ -13,6 +13,7 @@ public class GridGenerator : MonoBehaviour
     public Grid[,] gridArray;
     private Material obstacleMaterial;
     public Material targetMaterial;
+    public Material defaultMaterial;
 
     [SerializeField] public GameObject playerPrefab;
     private GameObject playerGameobject { get; set; }
@@ -33,6 +34,7 @@ public class GridGenerator : MonoBehaviour
     {
         obstacleMaterial = Resources.Load<Material>("Materials/ObstacleMat");
         targetMaterial = Resources.Load<Material>("Materials/TargetMat");
+        defaultMaterial = Resources.Load<Material>("Materials/DefaultMat");
         Debug.Log("Obstacle material: " + obstacleMaterial);
         GenerateGrid();
         playerGameobject = Spawner.Instance.SpawnPlayer();

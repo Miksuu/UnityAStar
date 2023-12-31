@@ -134,6 +134,10 @@ public class Pathfinding : MonoBehaviour
             gameObjectToControl.transform.position = new Vector3(grid.Coordinates.x, grid.Coordinates.y, -0.5f);
             yield return new WaitForSeconds(0.1f);
         }
+
+        var meshRenderer = targetGrid.GetComponent<MeshRenderer>();
+        meshRenderer.material = GridGenerator.Instance.defaultMaterial;
+
         Debug.Log("Player movement along path completed.");
         isObjectMovie = false;
     }
