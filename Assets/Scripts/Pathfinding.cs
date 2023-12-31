@@ -11,6 +11,8 @@ public class Pathfinding : MonoBehaviour
     private bool isObjectMoving = false;
     private List<Grid> updatedGrids = new List<Grid>();
 
+    private float movementDelayBetweenGrids = 0.1f;
+
     private void Awake()
     {
         gameObjectToControl = this.gameObject;
@@ -159,7 +161,7 @@ public class Pathfinding : MonoBehaviour
         {
             Debug.Log("Moving player to " + grid.Coordinates);
             gameObjectToControl.transform.position = new Vector3(grid.Coordinates.x, grid.Coordinates.y, -0.5f);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(movementDelayBetweenGrids);
         }
 
         var meshRenderer = targetGrid.GetComponent<MeshRenderer>();
